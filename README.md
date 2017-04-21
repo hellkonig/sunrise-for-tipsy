@@ -276,7 +276,7 @@ nohup ./sunrise.sh &
 ```
 or if you want to align the coordinates with the spin of stars, just doing
 ```
-nohup ./sunrise.sh -r &
+nohup ./sunrise.sh -s &
 ```
 The images will be called *edge.png* and *face.png*. Enjog!
 ![Image of galaxy](./edge.png)
