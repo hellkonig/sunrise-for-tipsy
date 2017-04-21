@@ -207,8 +207,78 @@ subdirectory `src`, congralutions, you have done to make Sunrise work
 on your server to produce mock observational images from Tipsy format
 simulation data.
 
+## Making mock observations
 
+To make a mock observation images from the snapshots with tipsy units (e.g.
+Gasoline/ChaNGa), You should install **pynbody** and compile **smooth** and 
+**std2ascii** on your server.
 
+### pynbody
+
+Pynbody is a light-weight, portable, format-transparent analysis framework 
+for N-body and hydrodynamic astrophysical simulations supporting 
+PKDGRAV/Gasoline, Gadget, N-Chilada, and RAMSES AMR outputs.
+You can find its installation guide and tutorials on its 
+[website](http://pynbody.github.io/pynbody/tutorials/tutorials.html).
+
+### smooth
+
+You can find [**smooth**](https://github.com/N-BodyShop/smooth) on 
+N-bodyShop's GitHub page, and fetch it by doing:
+```
+git clone https://github.com/N-BodyShop/smooth
+```
+to build:
+```
+make
+```
+The **smooth** executable should exist in the directory.
+
+### std2ascii
+
+**std2ascii** is one executable in 
+[tipsy_tools](https://github.com/N-BodyShop/tipsy_tools)
+on N-bodyShop's GitHub page, and fetch it by doing:
+```
+git clone https://github.com/N-BodyShop/tipsy_tools
+```
+Before build the whole set, remember to add **std2ascii** to `TOOLS` variable
+```make 
+TOOLS = ascii2bin bin2ascii totipnat totipstd snapshot std2ascii
+```
+and add a line for **std2ascii**
+```make
+td2ascii: std2ascii.o
+        $(CC) $(CFLAGS) -o std2ascii std2ascii.o -lm $(LIBS)
+```
+as **std2ascii** is not the default executable produced by *tipsy_tools*.
+Then build it:
+```
+make
+```
+The **std2ascii** associated with other five executables are in the directory.
+
+### Scripts producing mock observations
+
+It is the time to fetch scripts in this repository which created by 
+[greg stinson](https://github.com/stinsong4100) who hacked away at converting
+old idl scripts to python to produce your mock
+observations. I recommend you clone this repository to your local directory
+and make symbolic links for all scripts in the directory you want to make an
+image of and move the executables **sfthist**, **mcrx**, **broadband**,
+**smooth** and **std2ascii** to an identical directory, then change the path
+to the variable `SR` in *sunrise.sh*.
+
+If you have everything well installed, make sunrise images is as easy as these
+one line:
+```
+nohup ./sunrise.sh &
+```
+or if you want to align the coordinates with the spin of stars, just doing
+```
+nohup ./sunrise.sh -r &
+```
+The images will be called *edge.png* and *face.png*.
 
 ## Troubleshooting
 
