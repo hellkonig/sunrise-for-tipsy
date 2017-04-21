@@ -260,7 +260,7 @@ The **std2ascii** associated with other five executables are in the directory.
 
 ### Scripts producing mock observations
 
-It is the time to fetch scripts in this repository which created by 
+It is the time to fetch scripts which created by 
 [greg stinson](https://github.com/stinsong4100) who hacked away at converting
 old idl scripts to python to produce your mock
 observations. I recommend you clone this repository to your local directory
