@@ -168,13 +168,6 @@ export LDFLAGS=-L$HOME/lib (or wherever)
 make
 make install
 ```
-If the installation fails with the configuration with the message 
-```
-configure: error: Could not find a version of the boost_system library!
-```
-you can also use `--with-boost-libdir=$Home/lib/boost_1_48_0 (or whatever)` 
-to help the compiler find the libraries.
-
 This library now contains an embedded copy of the GNU "units" program for units 
 conversion. For this to work, the path to the file "units.dat" needs to be 
 defined in the environment variable UNITSFILE. On standard linux systems, this 
@@ -185,3 +178,44 @@ export UNITSFILE=/usr/share/units.dat
 to your bash_profile. If you don't have GNU units installed, you need to download 
 it and put this file somewhere. NB. As of v2.0, this file is no longer included, 
 so you must download v1.88.
+
+## Building Sunrise
+
+Get sources from the [repository](https://bitbucket.org/lutorm/sunrise) with git:
+```
+git clone https://bitbucket.org/lutorm/sunrise.git
+```
+In general you should check out the current version, which is mentioned on the 
+front page, not the trunk. The trunk may be unstable at any given time.
+Then build it:
+```
+autoreconf -fiv
+export CPPFLAGS="-I$HOME/include -I$HOME/include/libPJutil" (yes, you need to separately specify the libPJutil directory, sorry)
+export CFLAGS="-O2 -pthread"
+export CXXFLAGS="-ggdb  -O3  -pthread"
+export LDFLAGS="-pthread -L$HOME/lib"
+export CXX=icpc
+./configure --prefix=$HOME --with-boost=$HOME --with-boost-thread=mt --with-boost-program-options=mt
+```
+Finally, it's time to compile:
+```
+make
+make install
+```
+If you find the executables **sfrhist**, **mcrx** and **broadband** in the 
+subdirectory `src`, congralutions, you have done to make Sunrise work
+on your server to produce mock observational images from Tipsy format
+simulation data.
+
+
+
+
+## Troubleshooting
+
+If the installation fails with the configuration with the message 
+```
+configure: error: Could not find a version of the boost_system library!
+```
+you can also use `--with-boost-libdir=$Home/lib/boost_1_48_0 (or whatever)` 
+to help the compiler find the libraries.
+
