@@ -83,10 +83,6 @@ adding that directory to the include directives, you can do
 ln -s $PREFIX/include/boost-<version>/boost $PREFIX/include/boost.
 
 ```
-alternatively, if you do want to make a symbolic link, you can do
-```
-export LD_LIBRARY_PATH=$PREFIX/include/boost-<version>:$LD_LIBRARY_PATH
-```
 
 #### Blitz
 
@@ -292,3 +288,14 @@ configure: error: Could not find a version of the boost_system library!
 you can also use `--with-boost-libdir=$Home/lib/boost_1_48_0 (or whatever)` 
 to help the compiler find the libraries.
 
+After successfully compiling the boost,if you get the error
+```
+error while loading shared libraries: libboost_serialization.so.1.48.0: cannot open shared object file: No such file or directory
+```
+you have to add the path to the boost libraries to the environment variable 
+`LD_LIBRARY_PATH` by export the path like this:
+```
+export LD_LIBRARY_PATH=$Prefix/lib/boost_1_48_0:$LD_LIBRARY_PATH
+```
+Replace `$Prefix/lib/boost_1_48_0` with the path you choose to install boost
+libraries to.
